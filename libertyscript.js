@@ -153,11 +153,12 @@ function degRad(deg) {
 function mouseDown(e) {
     if (gamePlay) {
         let div = document.createElement('div');
+
         let deg = getDeg(e);
         div.setAttribute('class', 'fireme');
         div.moverx = 5 * Math.sin(degRad(deg));
         div.movery = -5 * Math.cos(degRad(deg));
-        div.style.left = (boxCenter[0] - 5) + 'px';
+        div.style.left = (".box" - 5) + 'px';
         div.style.top = (boxCenter[1] - 5) + 'px';
         div.style.width = 10 + 'px';
         div.style.height = 10 + 'px';
@@ -237,6 +238,62 @@ function moveShots() {
         else {
             shot.style.top = shot.offsetTop + shot.movery + 'px';
             shot.style.left = shot.offsetLeft + shot.moverx + 'px';
+        }
+    }
+}
+$(function(){
+	var introduction = $('.welcome-section'),
+		enterButton = introduction.find('.enter-button');
+
+		setTimeout(function(){
+		   introduction.removeClass('content-hidden');
+		   },800);
+		
+
+		enterButton.on('click',function(e){
+		 e.preventDefault();
+		 introduction.addClass('content-hidden').fadeOut();
+
+$('.cell').each( function() {
+		var cell = new Cell($(this));
+		cell.listen();
+	})
+
+
+
+	});
+});
+
+setInterval(movePlayer, 20);
+var keys = {}
+
+$(document).keydown(function(e) {
+    keys[e.keyCode] = true;
+});
+
+$(document).keyup(function(e) {
+    delete keys[e.keyCode];
+});
+
+
+function movePlayer() {
+    for (var direction in keys) {
+        if (!keys.hasOwnProperty(direction)) continue;
+        if (direction == 65) {
+            $(".player").animate({left: "-=5"}, 0);
+           
+        }
+        if (direction == 87) {
+            $(".player").animate({top: "-=5"}, 0);  
+             
+        }
+        if (direction == 68) {
+            $(".player").animate({left: "+=5"}, 0);  
+              
+        }
+        if (direction == 83) {
+            $(".player").animate({top: "+=5"}, 0);  
+            
         }
     }
 }
